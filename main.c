@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 
     /* ASSUME THAT ALL OF THE CORRECT COMMAND LINE ARGS ARE BEING PROVIDED */
 
-    if (argc != 2) 
+    if (argc < 2) 
     {
         printf("Usage: %s <ROM file path>\n", argv[0]);
         return 1;
