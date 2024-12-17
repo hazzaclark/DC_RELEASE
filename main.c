@@ -14,6 +14,31 @@
 
 #undef USE_ROM_PRAGMAS
 
+static ROM_OPTION* ROM_BASE;
+
+ROM_OPTION* INIT_ROM()
+{
+    ROM_BASE = malloc(sizeof(ROM_OPTION));
+
+    if(ROM_BASE == NULL)
+    {
+        fprintf(stderr, "Memory Allocation failed for ROM_BASE %p", (void*)ROM_BASE);
+        exit(EXIT_FAILURE);
+    }
+
+    memset(ROM_BASE->RELEASE_BUFFER, 0, sizeof(ROM_BASE->RELEASE_BUFFER));
+    memset(ROM_BASE->ROM_KEY, 0, sizeof(ROM_BASE->ROM_KEY));
+    memset(ROM_BASE->ROM_VALUE, 0, sizeof(ROM_BASE->ROM_VALUE));
+    memset(ROM_BASE->ROM_FILE_HEADER, 0, sizeof(ROM_BASE->ROM_FILE_HEADER));
+
+    ROM_BASE->ROM_START = 0;
+    ROM_BASE->ROM_END = 0;
+    ROM_BASE->ROM_READ_BUFFER = 0;
+    ROM_BASE->ROM_BYTES = 0;
+
+    return ROM_BASE;
+}
+
 /* ALLOCATE THE DESIGNATED MEMORY FOR THE ROM BUFFER */
 /* ASSUME A STACK SIZE OF 16 BYTES TO DISCERN THE SIZE OF THE BUFFER INITIALLY */
 
@@ -33,9 +58,7 @@ static char* ROM_BUFFER(const char* RELEASE, char* BUFFER)
 
 static void ROM_PROC_OPTION(const char* RELEASE) 
 {
-    struct ROM_OPTION* ROM_BASE;
-
-    ROM_BASE = malloc(sizeof(ROM_OPTION));
+    ROM_BASE = INIT_ROM();
 
     ROM_BUFFER(RELEASE, ROM_BASE->RELEASE_BUFFER);
     printf("Domestic Release Date: %s\n", ROM_BASE->RELEASE_BUFFER);
@@ -66,7 +89,7 @@ static bool IS_VALID(const char* VALUE)
 
 int main(int argc, char *argv[]) 
 {
-    struct ROM_OPTION* ROM_BASE;
+    ROM_BASE = INIT_ROM();
 
     /* ASSUME THAT ALL OF THE CORRECT COMMAND LINE ARGS ARE BEING PROVIDED */
 
