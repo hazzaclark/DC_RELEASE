@@ -27,10 +27,11 @@ From here, this program will look inside of the provided command-line argument u
 
 # Building:
 
-As of right now:
-git clone, this repo
+```
+git clone
 
-cd into your new directory and refer back to the demonstration at the beginning of the README
+gcc main.c -o main
+```
 
 Sources:
 
