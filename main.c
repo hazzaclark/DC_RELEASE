@@ -141,13 +141,19 @@ int main(int argc, char *argv[])
 
     for (size_t OFFSET = ROM_BASE->ROM_START; OFFSET <= ROM_BASE->ROM_END; ++OFFSET) 
     {
-        char RELEASE[17];
-        memcpy(RELEASE, ROM_BASE->ROM_FILE_HEADER + OFFSET, 16);
-        RELEASE[16] = '\0';
+        memcpy(ROM_BASE->ROM_RELEASE, ROM_BASE->ROM_FILE_HEADER + OFFSET, 16);
 
-        if (IS_VALID(RELEASE)) 
+        // IF THERE IS NO RELEASE DATE IN THE HEADER
+        // NULL TERMINATE THAT CHARACTER
+        
+        if(ROM_BASE->ROM_RELEASE != NULL)
         {
-            ROM_PROC_OPTION(RELEASE);
+            ROM_BASE->ROM_RELEASE[16] = '\0';
+        }
+
+        if (IS_VALID(ROM_BASE->ROM_RELEASE)) 
+        {
+            ROM_PROC_OPTION(ROM_BASE->ROM_RELEASE);
             return 0;
         }
     }
