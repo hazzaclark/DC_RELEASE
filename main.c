@@ -102,8 +102,8 @@ int main(int argc, char *argv[])
     FILE *ROM_FILE = fopen(argv[1], "rb");
     if (ROM_FILE == NULL) 
     {
-        printf("Error: Unable to open ROM file.\n");
-        return 1;
+        perror("Error: Unable to open ROM file.\n");
+        return EXIT_FAILURE;
     }
 
     /* SEEK INTO THE CONTENTS OF THE PROVIDED FILE */
@@ -113,8 +113,6 @@ int main(int argc, char *argv[])
     /* FROM THERE, ALLOCATE THE DESIGNATED MEMORY FROM THE STRUCTURE TO ASSERTAIN THE START AND END OFFSETS */
 
     fseek(ROM_FILE, 0, SEEK_SET);
-    ROM_BASE = malloc(sizeof(struct ROM_OPTION));
-
     ROM_BASE->ROM_BYTES = fread(ROM_BASE->ROM_FILE_HEADER, 1, MAX_ROM_HEADER_SIZE, ROM_FILE);
     
     if (ROM_BASE->ROM_BYTES != MAX_ROM_HEADER_SIZE) 
