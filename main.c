@@ -26,11 +26,6 @@ ROM_OPTION* INIT_ROM()
         exit(EXIT_FAILURE);
     }
 
-    memset(ROM_BASE->RELEASE_BUFFER, 0, sizeof(ROM_BASE->RELEASE_BUFFER));
-    memset(ROM_BASE->ROM_KEY, 0, sizeof(ROM_BASE->ROM_KEY));
-    memset(ROM_BASE->ROM_VALUE, 0, sizeof(ROM_BASE->ROM_VALUE));
-    memset(ROM_BASE->ROM_FILE_HEADER, 0, sizeof(ROM_BASE->ROM_FILE_HEADER));
-
     ROM_BASE->ROM_START = 0;
     ROM_BASE->ROM_END = 0;
     ROM_BASE->ROM_READ_BUFFER = 0;
@@ -129,6 +124,8 @@ int main(int argc, char *argv[])
         free(ROM_BASE);
         return 1;
     }
+
+    // DEFINES AN ORIGIN FOR THE ENDIANESS READER
 
     ROM_BASE->ROM_START = 0; 
     ROM_BASE->ROM_END = MAX_ROM_HEADER_SIZE - 16;
