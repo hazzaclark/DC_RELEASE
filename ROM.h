@@ -43,6 +43,8 @@ typedef struct ROM_OPTION
     size_t ROM_READ_BUFFER;
     size_t ROM_BYTES;
 
+    char ROM_RELEASE[17];
+
 
 } ROM_OPTION;
 
